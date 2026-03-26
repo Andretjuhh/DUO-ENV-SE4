@@ -11,7 +11,3 @@ with open(sys.argv[1]) as f:
     reader = csv.reader(f, delimiter=',')
     for row in reader:
         kentekens = kentekens.addFirst(row[0])
-
-kentekens.remove("55XBT8")
-
-print(kentekens.toString())

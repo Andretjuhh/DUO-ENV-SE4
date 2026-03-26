@@ -1,0 +1,69 @@
+
+-- BikeToDrive_1_Accessoireverkoop
+
+CREATE TABLE Accessoireverkoop_Leverancier (
+	leveranciernr INT,
+	naam VARCHAR(45),
+	adres VARCHAR(100),	
+	woonplaats VARCHAR(45),	
+
+	PRIMARY KEY(leveranciernr)
+);
+
+CREATE TABLE Accessoireverkoop_Accessoire (
+	accessoirenr INT,
+	naam VARCHAR(45),
+	standaardprijs FLOAT,
+	inkoopprijs FLOAT,
+	soort VARCHAR(45),
+	leverancier INT NOT NULL,
+
+	PRIMARY KEY(accessoirenr),
+	FOREIGN KEY(leverancier) REFERENCES Accessoireverkoop_Leverancier(leveranciernr)
+);
+
+CREATE TABLE Accessoireverkoop_Filiaal (
+	filiaalnr INT,
+	naam VARCHAR(45),
+	adres VARCHAR(100),
+	provincie VARCHAR(20),	
+
+	PRIMARY KEY(filiaalnr)
+);
+
+CREATE TABLE Accessoireverkoop_Monteur (
+	monteurnr INT,
+	naam VARCHAR(45),
+	woonplaats VARCHAR(45),
+	uurloon FLOAT,
+	filiaal INT NOT NULL,	
+
+	PRIMARY KEY(monteurnr),
+	FOREIGN KEY(filiaal) REFERENCES Accessoireverkoop_Filiaal(filiaalnr)
+);
+
+CREATE TABLE Accessoireverkoop_Klant (
+	klantnr INT,
+	naam VARCHAR(45),
+	adres VARCHAR(100),
+	woonplaats VARCHAR(45),
+	geslacht CHAR(1),
+	geboortedatum VARCHAR(10),	
+
+	PRIMARY KEY(klantnr)
+);
+
+CREATE TABLE Accessoire_Verkoop (
+	accessoire_verkoopnr INT,
+	datum DATE,
+	aantal int,
+	verkoopprijs FLOAT,
+	klant INT NOT NULL,
+	accessoire INT NOT NULL,
+	monteur INT NOT NULL,
+
+	PRIMARY KEY(accessoire_verkoopnr),
+	FOREIGN KEY(klant) REFERENCES Accessoireverkoop_Klant(klantnr),
+	FOREIGN KEY(accessoire) REFERENCES Accessoireverkoop_Accessoire(accessoirenr),
+	FOREIGN KEY(monteur) REFERENCES Accessoireverkoop_Monteur(monteurnr)
+);
